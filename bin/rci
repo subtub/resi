@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+var program = require('commander');
+var CommanderUtils = require('commander-utils');
+var pkg = require('../package.json');
+var fs = require('fs');
+var rci = require('../lib');
+
+/**
+ * Initialize the commander-utils module.
+ */
+CommanderUtils(program, pkg);
+/**
+ * Set some commander-utils specific settings.
+ */
+program.setDescription('Recursive Content Include');
+
+/**
+ * The tool options.
+ */
+program
+  .option('-i, --input <File>', 'The File Input')
+  .option('-o, --output <File>', 'The File Output')
+  .option('-b, --begin-tag <String>', 'Set the Begin Tag')
+  .option('-e, --end-tag <String>', 'Set the end Tag');
+
+/**
+ * Parse it.
+ */
+program
+  .parseUtils()
+  .parse(process.argv);
+
+/**
+ * The tool logic.
+ */
+var beginTag = '<%>';
+var endTag = '</%>';
+
+if (program.input) {
+  rci(program.input, beginTag, endTag, function(data) {
+    // save the file if the --output option was set.
+    if (program.output) {
+      fs.writeFile(program.output, data, 'utf8', function() {
+        program.log.info('Write file to ' + program.output);
+      });
+    };
+  });
+}
+
+if (program.beginTag) {
+  beginTag = program.beginTag;
+  program.log.info('Set the begin Tag to: ' + beginTag);
+}
+
+if (program.endTag) {
+  endTag = program.endTag;
+  program.log.info('Set the end Tag to: ' + endTag);
+}
