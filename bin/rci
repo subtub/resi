@@ -41,7 +41,7 @@ var beginTag = '<%>';
 var endTag = '</%>';
 
 if (program.input) {
-  rci(program.input, beginTag, endTag, function(data) {
+  rci.readFile(program.input, beginTag, endTag, function(data) {
     // save the file if the --output option was set.
     if (program.output) {
       fs.writeFile(program.output, data, 'utf8', function() {
