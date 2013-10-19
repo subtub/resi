@@ -24,6 +24,7 @@
     "commander-utils": "https://github.com/subtub/commander-utils/archive/v0.0.5.tar.gz"
   },
   "devDependencies": {
-    "CommonMakefiles": "https://github.com/subtub/CommonMakefiles/tarball/master"
+    "CommonMakefiles": "https://github.com/subtub/CommonMakefiles/tarball/master",
+    "mocha": "1.13.0"
   }
 }
