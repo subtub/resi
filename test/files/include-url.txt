@@ -1,0 +1,3 @@
+hello world
+
+<%>https://raw.github.com/WrongEntertainment/RecursiveContentInclude/master/test/files/no-include.txt</%>
