@@ -5,7 +5,7 @@ var shell = require('shelljs/global');
 describe('bin/rci', function() {
   testExec('');
   testExec('-i test/files/no-include.txt');
-  testExec('-i test/files/include.txt -o test/files/_test.txt');
+  testExec('-i test/files/include-file.txt -o test/files/_test.txt');
 });
 
 /**
