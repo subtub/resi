@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "CommonMakefiles": "https://github.com/subtub/CommonMakefiles/tarball/master",
-    "mocha": "1.13.0"
+    "mocha": "1.13.0",
+    "shelljs": "0.2.6"
   }
 }
