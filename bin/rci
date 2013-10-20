@@ -41,17 +41,16 @@ var beginTag = '<%>';
 var endTag = '</%>';
 
 if (program.input) {
-  rci.readFile(program.input, beginTag, endTag, function(data) {
-    // save the file if the --output option was set.
-    if (program.output) {
-      fs.writeFile(program.output, data, 'utf8', function() {
-        program.log.info('Write file to ' + program.output);
-      });
-    }
-    else {
-      program.log.info(data);
-    }
-  });
+  var data = rci.readFileSync(program.input, beginTag, endTag);
+  // save the file if the --output option was set.
+  if (program.output) {
+    fs.writeFile(program.output, data, 'utf8', function() {
+      program.log.info('Write file to ' + program.output);
+    });
+  }
+  else {
+    program.log.info(data);
+  }
 }
 
 if (program.beginTag) {
