@@ -47,7 +47,10 @@ if (program.input) {
       fs.writeFile(program.output, data, 'utf8', function() {
         program.log.info('Write file to ' + program.output);
       });
-    };
+    }
+    else {
+      program.log.info(data);
+    }
   });
 }
 
