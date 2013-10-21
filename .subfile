@@ -1,0 +1,23 @@
+// subtool configuration file
+module.exports = { version: '0.0.2',
+
+  // Set GitHub User- and Project-Name.
+  github: {
+    username: 'WrongEntertainment',
+    project: 'RecursiveContentInclude'
+  },
+
+  // Settings for the README.md file.
+  readme: {
+    // Generate a Table of Content Markdown list.
+    toc: true,
+    content: [
+      { title: 'General Information',  file: '/docs/general_information.md' }
+    ]
+  },
+  
+  // Set the type of License you want to use. Choose between the following types:
+  // apache, freebsd, isc, mit, newbsd
+  license: 'mit'
+  
+}
