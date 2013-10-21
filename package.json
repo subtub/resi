@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "commander": "2.0.0",
-    "commander-utils": "https://github.com/subtub/commander-utils/archive/v0.0.5.tar.gz"
+    "commander-utils": "https://github.com/subtub/commander-utils/archive/v0.1.1.tar.gz"
   },
   "devDependencies": {
     "CommonMakefiles": "https://github.com/subtub/CommonMakefiles/tarball/master",
