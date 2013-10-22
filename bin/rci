@@ -16,16 +16,23 @@ CommanderUtils(program, pkg);
 /**
  * Set some commander-utils specific settings.
  */
-program.setDescription('Recursive Content Include');
+program
+  .setDescription('Recursive Content Include')
+  .addExamples([
+    { description: 'Process a file and print the result to console.',
+      command:     'rci --input path/to/file.txt' },
+    { description: 'Process a file with custom begin/end tags (mustache style).',
+      command:     'rci --begin-tag {{ --end-tag }} --input path/to/file.txt' }
+  ]);
 
 /**
  * The tool options.
  */
 program
-  .option('-i, --input <File>', 'The File Input')
-  .option('-o, --output <File>', 'The File Output')
-  .option('-b, --begin-tag <String>', 'Set the Begin Tag')
-  .option('-e, --end-tag <String>', 'Set the end Tag');
+  .option('-i, --input <File>', 'the file input')
+  .option('-o, --output <File>', 'the file output')
+  .option('-b, --begin-tag <String>', 'set the begin tag')
+  .option('-e, --end-tag <String>', 'set the end tag');
 
 /**
  * Parse it.
