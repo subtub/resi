@@ -12,6 +12,32 @@ describe('lib/index.js', function() {
     });
   });
   
+  describe('#lexer()', function() {
+    it('lex "hello world".', function() {
+      var result = rci.lexer('hello world','<%>', '</%>');
+      var expected = [
+        { content: 'hello world' }
+      ];
+      assert.deepEqual(expected, result);
+    });
+    it('lex "hello world <%>path/to/file.txt</%>".', function() {
+      var result = rci.lexer('hello world <%>path/to/file.txt</%>','<%>', '</%>');
+      var expected = [
+        { content: 'hello world ' },
+        { file: 'path/to/file.txt' },
+      ];
+      assert.deepEqual(expected, result);
+    });
+    it('lex "hello world <%>http://link.to.url</%>".', function() {
+      var result = rci.lexer('hello world <%>http://link.to.url</%>','<%>', '</%>');
+      var expected = [
+        { content: 'hello world ' },
+        { url: 'http://link.to.url' },
+      ];
+      assert.deepEqual(expected, result);
+    });
+  });
+
   describe('#include()', function() {
     it('should return the content without include other files.', function() {
       var data = rci.include('hello world', '<%>', '</%>');
