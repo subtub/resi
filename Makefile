@@ -10,4 +10,6 @@ include $(COMMON_MAKEFILES_PATH)/subtub/subtool.make
 
 docs: jsdox
 
-.PHONY: docs
+readme: jsdox subtool-readme
+
+.PHONY: docs readme
