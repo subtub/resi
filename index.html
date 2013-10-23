@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Recursivecontentinclude by WrongEntertainment</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Recursivecontentinclude</h1>
+        <h2></h2>
+        <a href="https://github.com/WrongEntertainment/RecursiveContentInclude" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="recursivecontentinclude-v020" class="anchor" href="#recursivecontentinclude-v020"><span class="octicon octicon-link"></span></a>RecursiveContentInclude v0.2.0</h1>
+
+<p><a href="https://travis-ci.org/WrongEntertainment/RecursiveContentInclude"><img src="https://travis-ci.org/WrongEntertainment/RecursiveContentInclude.png?branch=master" alt="Build Status"></a></p>
+
+<h2>
+<a name="table-of-content" class="anchor" href="#table-of-content"><span class="octicon octicon-link"></span></a>Table of Content</h2>
+
+<p><a href="#general-information">General Information</a><br><a href="#api">API</a>  </p>
+
+<h2>
+<a name="general-information" class="anchor" href="#general-information"><span class="octicon octicon-link"></span></a>General Information</h2>
+
+<p>Include files into files, recursive, yap!  </p>
+
+<p><em><a href="#table-of-content">back to table of content</a></em></p>
+
+<h2>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h2>
+
+<h2>
+<a name="readfilesyncpath-options" class="anchor" href="#readfilesyncpath-options"><span class="octicon octicon-link"></span></a>readFileSync(path, [options])</h2>
+
+<p>Read a file and run the include process.</p>
+
+<p><strong>Parameters</strong></p>
+
+<p><strong>path</strong>:  <em>String</em>,  The filepath.</p>
+
+<p><strong>[options]</strong>:  <em>Object</em>,  beginTag String, default: <code>&lt;%&gt;</code>, endTag String, default: <code>&lt;/%&gt;</code></p>
+
+<p><strong>Returns</strong></p>
+
+<p><em>String</em>,  The processed content.</p>
+
+<h2>
+<a name="lexercontent-begintag-endtag" class="anchor" href="#lexercontent-begintag-endtag"><span class="octicon octicon-link"></span></a>lexer(content, beginTag, endTag)</h2>
+
+<p>Parse the file and return an array.</p>
+
+<p><strong>Parameters</strong></p>
+
+<p><strong>content</strong>:  <em>String</em>,  The content we want to parse.</p>
+
+<p><strong>beginTag</strong>:  <em>String</em>,  The begin tag.</p>
+
+<p><strong>endTag</strong>:  <em>String</em>,  The end tag.</p>
+
+<p><strong>Returns</strong></p>
+
+<p><em>Array</em>,  The lexed array.</p>
+
+<h2>
+<a name="processcontent-begintag-endtag" class="anchor" href="#processcontent-begintag-endtag"><span class="octicon octicon-link"></span></a>process(content, beginTag, endTag)</h2>
+
+<p>Process the content string and return the result.</p>
+
+<p><strong>Parameters</strong></p>
+
+<p><strong>content</strong>:  <em>String</em>,  The content we want to parse.</p>
+
+<p><strong>beginTag</strong>:  <em>String</em>,  The begin tag.</p>
+
+<p><strong>endTag</strong>:  <em>String</em>,  The end tag</p>
+
+<p><strong>Returns</strong></p>
+
+<p><em>String</em>,  The processed content.</p>
+
+<h2>
+<a name="isurlstr" class="anchor" href="#isurlstr"><span class="octicon octicon-link"></span></a>isUrl(str)</h2>
+
+<p>Check if the tag is a http or https url.</p>
+
+<p><strong>Parameters</strong></p>
+
+<p><strong>str</strong>:  <em>String</em>,  The tag content.</p>
+
+<p><strong>Returns</strong></p>
+
+<p><em>Boolean</em>,  true or false.</p>
+
+<p><em><a href="#table-of-content">back to table of content</a></em></p>
+
+<h2>
+<a name="contributors" class="anchor" href="#contributors"><span class="octicon octicon-link"></span></a>Contributors</h2>
+
+<pre><code> project  : RecursiveContentInclude
+ repo age : 4 days
+ active   : 5 days
+ commits  : 54
+ files    : 20
+ authors  : 
+    54  Paul Vollmer            100,0%
+
+</code></pre>
+
+<p><em><a href="#table-of-content">back to table of content</a></em></p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<pre><code>The MIT License (MIT)  
+
+Copyright (c) 2013 subtub  
+
+Permission is hereby granted, free of charge, to any person obtaining a copy  
+of this software and associated documentation files (the "Software"), to deal  
+in the Software without restriction, including without limitation the rights  
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
+copies of the Software, and to permit persons to whom the Software is  
+furnished to do so, subject to the following conditions:  
+
+The above copyright notice and this permission notice shall be included in  
+all copies or substantial portions of the Software.  
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN  
+THE SOFTWARE.  
+</code></pre>
+
+<p><em><a href="#table-of-content">back to table of content</a></em></p>
+
+<hr><p><em>This Readme was generated by <a href="https://www.github.com/subtub/subtool/releases/tag/v0.2.0">subtool</a> on Wed Oct 23 2013 13:53:58 GMT+0200 (CEST).</em>  </p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/WrongEntertainment/RecursiveContentInclude/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/WrongEntertainment/RecursiveContentInclude/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/WrongEntertainment/RecursiveContentInclude"></a> is maintained by <a href="https://github.com/WrongEntertainment">WrongEntertainment</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
