@@ -10,7 +10,7 @@
   "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
-    "test": "make test-hint"
+    "test": "make test"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "exec-sync": "0.1.6"
   },
   "devDependencies": {
-    "CommonMakefiles": "https://github.com/subtub/commander-utils/archive/v0.0.3.tar.gz",
+    "CommonMakefiles": "https://github.com/subtub/commander-utils/archive/v0.0.4.tar.gz",
     "subtool": "https://github.com/subtub/subtool/archive/v0.0.5.tar.gz",
     "mocha": "1.13.0",
     "jshint" : "2.3.0",
