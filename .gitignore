@@ -8,3 +8,9 @@ node_modules
 # Docs
 ###
 docs/api.md
+
+###
+# Test
+###
+test/files/_test_1.txt
+test/files/_test_2.txt
