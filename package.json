@@ -1,6 +1,6 @@
 {
   "name": "RecursiveContentInclude",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Recursive Content Include and a cli tool that do it",
   "keywords": [
     "content",
@@ -21,7 +21,9 @@
   },
   "dependencies": {
     "commander": "2.0.0",
-    "commander-utils": "https://github.com/subtub/commander-utils/archive/v0.1.4.tar.gz"
+    "commander-utils": "https://github.com/subtub/commander-utils/archive/v0.1.4.tar.gz",
+    "request": "2.27.0",
+    "exec-sync": "0.1.6"
   },
   "devDependencies": {
     "CommonMakefiles": "https://github.com/subtub/CommonMakefiles/tarball/master",

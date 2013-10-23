@@ -4,10 +4,22 @@ var rci = require('../lib');
 
 describe('lib/index.js', function() {
 
-  describe('#readFile()', function() {
+  describe('#readFileSync()', function() {
     it('test with no-include.txt', function() {
-      var data = rci.readFileSync('./test/files/no-include.txt', '<%>', '</%>');
-      var expected = 'no include at this file\n';
+      var data = rci.readFileSync('./test/files/no-include.txt');
+      var expected = 'no include at this file.';
+      assert.equal(expected, data);
+    });
+
+    it('test with include-file.txt', function() {
+      var data = rci.readFileSync('./test/files/include-file.txt');
+      var expected = 'hello world\n\nno include at this file.\n';
+      assert.equal(expected, data);
+    });
+
+    it('test with include-files.txt', function() {
+      var data = rci.readFileSync('./test/files/include-files.txt');
+      var expected = 'hello world\n\nno include at this file.\nno include at this file.\n';
       assert.equal(expected, data);
     });
   });
@@ -15,60 +27,89 @@ describe('lib/index.js', function() {
   describe('#lexer()', function() {
     it('lex "hello world".', function() {
       var result = rci.lexer('hello world','<%>', '</%>');
-      var expected = [
-        { content: 'hello world' }
-      ];
+      var expected = [ {type:'text', content:'hello world'} ];
       assert.deepEqual(expected, result);
     });
+    
+    it('lex "<%>path/to/file.txt</%>".', function() {
+      var result = rci.lexer('<%>path/to/file.txt</%>','<%>', '</%>');
+      var expected = [ {type:'file', content:'path/to/file.txt'} ];
+      assert.deepEqual(expected, result);
+    });
+
+    it('lex "<%>http://link.to.url</%>".', function() {
+      var result = rci.lexer('<%>http://link.to.url</%>','<%>', '</%>');
+      var expected = [ {type:'url', content:'http://link.to.url'} ];
+      assert.deepEqual(expected, result);
+    });
+
     it('lex "hello world <%>path/to/file.txt</%>".', function() {
       var result = rci.lexer('hello world <%>path/to/file.txt</%>','<%>', '</%>');
-      var expected = [
-        { content: 'hello world ' },
-        { file: 'path/to/file.txt' },
-      ];
+      var expected = [ {type:'text', content:'hello world '},
+                       {type:'file', content:'path/to/file.txt'} ];
       assert.deepEqual(expected, result);
     });
+
     it('lex "hello world <%>http://link.to.url</%>".', function() {
       var result = rci.lexer('hello world <%>http://link.to.url</%>','<%>', '</%>');
-      var expected = [
-        { content: 'hello world ' },
-        { url: 'http://link.to.url' },
-      ];
+      var expected = [ {type:'text', content:'hello world '},
+                       {type:'url',  content:'http://link.to.url'} ];
       assert.deepEqual(expected, result);
     });
+    
     it('lex "hello world <%>http://link.to.url</%> more text here...".', function() {
       var result = rci.lexer('hello world <%>http://link.to.url</%> more text here...','<%>', '</%>');
-      var expected = [
-        { content: 'hello world ' },
-        { url: 'http://link.to.url' },
-        { content: ' more text here...' }
-      ];
+      var expected = [ {type:'text', content: 'hello world '},
+                       {type:'url',  content: 'http://link.to.url'},
+                       {type:'text', content:' more text here...'} ];
       assert.deepEqual(expected, result);
     });
+    
     it('lex "<%>path/to/file.txt</%> <%>http://link.to.url</%>".', function() {
       var result = rci.lexer('<%>path/to/file.txt</%> <%>http://link.to.url</%>','<%>', '</%>');
-      var expected = [
-        { file: 'path/to/file.txt' },
-        { content: ' ' },
-        { url: 'http://link.to.url' }
-      ];
+      var expected = [ {type:'file', content:'path/to/file.txt'},
+                       {type:'text', content: ' '},
+                       {type:'url',  content:'http://link.to.url'} ];
       assert.deepEqual(expected, result);
     });
   });
 
-  describe('#include()', function() {
-    it('should return the content without include other files.', function() {
-      var data = rci.include('hello world', '<%>', '</%>');
-      assert.equal('hello world', data);
+  describe('#process()', function() {
+    it('content: "hello world"', function() {
+      var expected = 'hello world';
+      var result = rci.process('hello world', '<%>', '</%>');
+      assert.deepEqual(expected, result);
     });
-    it('should return the content with a file content include.', function() {
-      var data = rci.include('hello world <%>test/files/no-include.txt</%>', '<%>', '</%>');
-      assert.equal('hello world no include at this file\n', data);
+
+    it('content: "<%>test/files/no-include.txt</%>"', function() {
+      var expected = 'no include at this file.';
+      var result = rci.process('<%>test/files/no-include.txt</%>', '<%>', '</%>');
+      assert.deepEqual(expected, result);
     });
-    // it('should return the content with an url content include.', function() {
-    //   var data = rci.include('hello world <%>https://raw.github.com/WrongEntertainment/RecursiveContentInclude/master/test/files/no-include.txt</%>', '<%>', '</%>');
-    //   assert.equal('hello world no include at this file\n', data);
-    // });
+
+    it('content: "<%>https://raw.github.com/WrongEntertainment/RecursiveContentInclude/master/test/files/no-include.txt</%>"', function() {
+      var expected = 'no include at this file';
+      var result = rci.process('<%>https://raw.github.com/WrongEntertainment/RecursiveContentInclude/master/test/files/no-include.txt</%></%>', '<%>', '</%>');
+      assert.deepEqual(expected, result);
+    });
+
+    it('content: "hello world, <%>test/files/no-include.txt</%>"', function() {
+      var expected = 'hello world, no include at this file.';
+      var result = rci.process('hello world, <%>test/files/no-include.txt</%>', '<%>', '</%>');
+      assert.deepEqual(expected, result);
+    });
+
+    it('content: "hello world, <%>https://raw.github.com/WrongEntertainment/RecursiveContentInclude/master/test/files/no-include.txt</%></%>"', function() {
+      var expected = 'hello world, no include at this file';
+      var result = rci.process('hello world, <%>https://raw.github.com/WrongEntertainment/RecursiveContentInclude/master/test/files/no-include.txt</%></%>', '<%>', '</%>');
+      assert.deepEqual(expected, result);
+    });
+
+    it('content: "hello world, <%>test/files/no-include.txt</%> more text..."', function() {
+      var expected = 'hello world, no include at this file. more text...';
+      var result = rci.process('hello world, <%>test/files/no-include.txt</%> more text...', '<%>', '</%>');
+      assert.deepEqual(expected, result);
+    });
   });
 
   describe('#isUrl()', function() {
