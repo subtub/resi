@@ -12,4 +12,6 @@ docs: jsdox
 
 readme: jsdox subtool-readme
 
-.PHONY: docs readme
+readme-git: jsdox subtool-readme-git
+
+.PHONY: docs readme readme-git
