@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome-ie7.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/jsoverson/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>lib/index.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
+      <p class="stat">53.04</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
+      <p class="stat">142</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
+      <p class="stat">45.08</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
+      <p class="stat">0.93</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">/**
+ * Module dependencies.
+ */
+var fs = require(&#039;fs&#039;);
+var execSync = require(&#039;exec-sync&#039;);
+//var util = require(&#039;util&#039;);
+
+
+var RecursiveContentInclude = {
+
+  /**
+   * Read a file and run the include process.
+   *
+   * @param {String} path The filepath.
+   * @param {Object} [options] beginTag String, default: `&lt;%&gt;`, endTag String, default: `&lt;/%&gt;`
+   * @returns {String} The processed content.
+   */
+  readFileSync: function(path, options) {
+    var beginTag = &#039;&lt;%&gt;&#039;;
+    var endTag = &#039;&lt;/%&gt;&#039;;
+    if (options !== undefined) {
+      if (options.beginTag !== undefined) beginTag = options.beginTag;
+      if (options.endTag !== undefined) endTag = options.endTag;
+    }
+
+    var data = fs.readFileSync(path, &#039;utf8&#039;);
+    var result = this.process(data, beginTag, endTag);
+    return result;
+  },
+
+  /**
+   * Parse the file and return an array.
+   *
+   * @param {String} content The content we want to parse.
+   * @param {String} beginTag The begin tag.
+   * @param {String} endTag The end tag.
+   * @returns {Array} The lexed array.
+   */
+  lexer: function(content, beginTag, endTag) {
+    // The object we want to return later...
+    var obj = [];
+    
+    // Split the string
+    var contentBeginTagArray = content.split(beginTag);
+
+    // If only one element exist, there is no tag at this content.
+    if (contentBeginTagArray.length === 1) {
+      obj.push( {type: &#039;text&#039;, content: contentBeginTagArray[0]} );
+    }
+    // if more than one elements exist, min. one tag is at the content.
+    else {
+      for (var i=0; i&lt;contentBeginTagArray.length; i++) {
+        var contentArray = contentBeginTagArray[i].split(endTag);
+        
+        // if the content array object contains text...
+        if (contentArray.length === 1) {
+          if (contentArray[0] !== &#039;&#039;) obj.push( {type: &#039;text&#039;, content: contentArray[0]} );
+        }
+        // if there is a tag...
+        else {
+          // check if it is an url, set the type to &quot;url&quot;.
+          if (this.isUrl(contentArray[0])) {
+            obj.push( {type: &#039;url&#039;, content: contentArray[0]} );
+          }
+          // set the type to &quot;file&quot;.
+          else {
+            obj.push( {type: &#039;file&#039;, content: contentArray[0]} );
+          }
+          if (contentArray[1] !== &#039;&#039;) obj.push( {type: &#039;text&#039;, content: contentArray[1]} );
+        }
+      }
+    }
+    return obj;
+  },
+
+  /**
+   * Process the content string and return the result.
+   *
+   * @param {String} content The content we want to parse.
+   * @param {String} beginTag The begin tag.
+   * @param {String} endTag The end tag
+   * @returns {String} The processed content.
+   */
+  process: function(content, beginTag, endTag) {
+    var lexed = this.lexer(content, beginTag, endTag);
+    // console.log(&#039;\nLEXER --------------------------&#039;);
+    // console.log(util.inspect(lexed, false, null));
+    // console.log(&#039;--------------------------------&#039;);
+
+    var tmp = &#039;&#039;;
+
+    // if the lexer array contains only one object, check the type.
+    // If the type is &quot;file&quot; or &quot;url&quot;, load/request the file we want to include.
+    if (lexed.length === 1) {
+      if (lexed[0].type === &#039;text&#039;) {
+        tmp = lexed[0].content;
+      }
+      else if (lexed[0].type === &#039;file&#039;) {
+        tmp = this.readFileSync(lexed[0].content, {beginTag: beginTag, endTag: endTag});
+      }
+      else if (lexed[0].type === &#039;url&#039;) {
+        var data = execSync(&#039;curl -s &#039;+lexed[0].content);
+        tmp = this.process(data, beginTag, endTag);
+      }
+    }
+    // If there are more than one object...
+    else {
+      for (var i=0; i&lt;lexed.length; i++) {
+        if (lexed[i].type === &#039;text&#039;) {
+          tmp += lexed[i].content;
+        }
+        else if (lexed[i].type === &#039;file&#039;) {
+          tmp += this.readFileSync(lexed[i].content, {beginTag: beginTag, endTag: endTag});
+        }
+        else if (lexed[i].type === &#039;url&#039;) {
+          var curlData = execSync(&#039;curl -s &#039;+lexed[i].content);
+          tmp += this.process(curlData, beginTag, endTag);
+        }
+      }
+    }
+
+    return tmp;
+  },
+
+  /**
+   * Check if the tag is a http or https url.
+   *
+   * @param {String} str The tag content.
+   * @returns {Boolean} true or false.
+   */
+  isUrl: function(str) {
+    //console.log(&#039;isUrl: &#039;+str);
+    var isHttp = str.indexOf(&#039;http://&#039;);
+    var isHttps = str.indexOf(&#039;https://&#039;);
+    if (isHttp === 0 || isHttps === 0) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+};
+
+module.exports = RecursiveContentInclude;</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>
