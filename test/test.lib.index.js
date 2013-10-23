@@ -36,6 +36,24 @@ describe('lib/index.js', function() {
       ];
       assert.deepEqual(expected, result);
     });
+    it('lex "hello world <%>http://link.to.url</%> more text here...".', function() {
+      var result = rci.lexer('hello world <%>http://link.to.url</%> more text here...','<%>', '</%>');
+      var expected = [
+        { content: 'hello world ' },
+        { url: 'http://link.to.url' },
+        { content: ' more text here...' }
+      ];
+      assert.deepEqual(expected, result);
+    });
+    it('lex "<%>path/to/file.txt</%> <%>http://link.to.url</%>".', function() {
+      var result = rci.lexer('<%>path/to/file.txt</%> <%>http://link.to.url</%>','<%>', '</%>');
+      var expected = [
+        { file: 'path/to/file.txt' },
+        { content: ' ' },
+        { url: 'http://link.to.url' }
+      ];
+      assert.deepEqual(expected, result);
+    });
   });
 
   describe('#include()', function() {
