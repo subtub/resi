@@ -30,6 +30,7 @@
     "subtool": "https://github.com/subtub/subtool/archive/v0.0.5.tar.gz",
     "mocha": "1.13.0",
     "jshint" : "2.3.0",
+    "jsdox" : "0.2.2",
     "shelljs": "0.2.6"
   }
 }
