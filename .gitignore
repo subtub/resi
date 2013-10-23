@@ -1,15 +1,10 @@
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
-
-pids
-logs
-results
-
+###
+# Node.js
+###
 npm-debug.log
 node_modules
+
+###
+# Docs
+###
+docs/api.md
