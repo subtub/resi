@@ -25,7 +25,7 @@ describe('lib/index.js', function() {
 
     it('test with "include-url.txt"', function() {
       var data = rci.readFileSync('./test/files/include-url.txt');
-      var expected = 'hello world\n\nno include at this file\n';
+      var expected = 'hello world\n\nno include at this file.\n';
       assert.equal(expected, data);
     });
   });
@@ -94,7 +94,7 @@ describe('lib/index.js', function() {
     });
 
     it('content: "<%>https://raw.github.com/WrongEntertainment/RecursiveContentInclude/master/test/files/no-include.txt</%>"', function() {
-      var expected = 'no include at this file';
+      var expected = 'no include at this file.';
       var result = rci.process('<%>https://raw.github.com/WrongEntertainment/RecursiveContentInclude/master/test/files/no-include.txt</%></%>', '<%>', '</%>');
       assert.deepEqual(expected, result);
     });
@@ -106,7 +106,7 @@ describe('lib/index.js', function() {
     });
 
     it('content: "hello world, <%>https://raw.github.com/WrongEntertainment/RecursiveContentInclude/master/test/files/no-include.txt</%></%>"', function() {
-      var expected = 'hello world, no include at this file';
+      var expected = 'hello world, no include at this file.';
       var result = rci.process('hello world, <%>https://raw.github.com/WrongEntertainment/RecursiveContentInclude/master/test/files/no-include.txt</%></%>', '<%>', '</%>');
       assert.deepEqual(expected, result);
     });
