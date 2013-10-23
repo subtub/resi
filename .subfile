@@ -19,6 +19,11 @@ module.exports = { version: '0.0.2',
   
   // Set the type of License you want to use. Choose between the following types:
   // apache, freebsd, isc, mit, newbsd
-  license: 'mit'
+  license: 'mit',
+
+  travis: {
+    language: 'node_js',
+    version: ['0.8', '0.10']
+  }
   
 }
