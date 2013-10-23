@@ -1,6 +1,6 @@
 {
   "name": "RecursiveContentInclude",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Recursive Content Include and a cli tool that do it",
   "keywords": [
     "content",
@@ -10,7 +10,7 @@
   "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
-    "test": "make test"
+    "test": "make test-hint"
   },
   "repository": {
     "type": "git",
@@ -21,12 +21,16 @@
   },
   "dependencies": {
     "commander": "2.0.0",
-    "commander-utils": "https://github.com/subtub/commander-utils/archive/v0.1.1.tar.gz"
+    "commander-utils": "https://github.com/subtub/commander-utils/archive/v0.1.4.tar.gz",
+    "request": "2.27.0",
+    "exec-sync": "0.1.6"
   },
   "devDependencies": {
     "CommonMakefiles": "https://github.com/subtub/CommonMakefiles/tarball/master",
     "subtool": "https://github.com/subtub/subtool/archive/v0.0.5.tar.gz",
     "mocha": "1.13.0",
+    "jshint" : "2.3.0",
+    "jsdox" : "0.2.2",
     "shelljs": "0.2.6"
   }
 }
