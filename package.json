@@ -1,6 +1,6 @@
 {
   "name": "RecursiveContentInclude",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Recursive Content Include and a cli tool that do it",
   "keywords": [
     "content",
