@@ -49,6 +49,12 @@ describe('lib/index.js', function() {
       assert.deepEqual(expected, result);
     });
 
+    it('lex "<%>script: whoami</%>".', function() {
+      var result = rci.lexer('<%>script: whoami</%>','<%>', '</%>');
+      var expected = [ {type:'script', content:'whoami'} ];
+      assert.deepEqual(expected, result);
+    });
+
     it('lex "hello world <%>path/to/file.txt</%>".', function() {
       var result = rci.lexer('hello world <%>path/to/file.txt</%>','<%>', '</%>');
       var expected = [ {type:'text', content:'hello world '},
@@ -78,6 +84,16 @@ describe('lib/index.js', function() {
                        {type:'url',  content:'http://link.to.url'} ];
       assert.deepEqual(expected, result);
     });
+
+    it('lex "<%>path/to/file.txt</%> <%>http://link.to.url</%> <%>script: whoami</%>".', function() {
+      var result = rci.lexer('<%>path/to/file.txt</%> <%>http://link.to.url</%> <%>script: whoami</%>','<%>', '</%>');
+      var expected = [ {type:'file', content:'path/to/file.txt'},
+                       {type:'text', content: ' '},
+                       {type:'url',  content:'http://link.to.url'},
+                       {type:'text', content: ' '},
+                       {type:'script',  content:'whoami'} ];
+      assert.deepEqual(expected, result);
+    });
   });
 
   describe('#process()', function() {
@@ -96,6 +112,21 @@ describe('lib/index.js', function() {
     it('content: "<%>https://raw.github.com/WrongEntertainment/RecursiveContentInclude/master/test/files/no-include.txt</%>"', function() {
       var expected = 'no include at this file.';
       var result = rci.process('<%>https://raw.github.com/WrongEntertainment/RecursiveContentInclude/master/test/files/no-include.txt</%></%>', '<%>', '</%>');
+      assert.deepEqual(expected, result);
+    });
+
+    it('content: "<%>script: ls</%>"', function() {
+      var expected = 'LICENSE\n'+
+                     'Makefile\n'+
+                     'README.md\n'+
+                     'bin\n'+
+                     'docs\n'+
+                     'lib\n'+
+                     'node_modules\n'+
+                     'package.json\n'+
+                     'samples\n'+
+                     'test';
+      var result = rci.process('<%>script: ls</%>', '<%>', '</%>');
       assert.deepEqual(expected, result);
     });
 
@@ -127,6 +158,17 @@ describe('lib/index.js', function() {
     });
     it('should return false if it is not a url.', function() {
       assert.equal(false, rci.isUrl('foo/bar'));
+    });
+  });
+
+  describe('#isScript()', function() {
+    it('should return true if the parameter begin with "sh ".', function() {
+      var result = rci.isScript('script: whoami');
+      assert.equal(true, result);
+    });
+    it('should return false if it is no script.', function() {
+      var result = rci.isScript('path/to/file.txt');
+      assert.equal(false, result);
     });
   });
 
