@@ -17,10 +17,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/WrongEntertainment/RecursiveContentInclude.git"
+    "url": "git://github.com/subtub/RecursiveContentInclude.git"
   },
   "bugs": {
-    "url": "https://github.com/WrongEntertainment/RecursiveContentInclude/issues"
+    "url": "https://github.com/subtub/RecursiveContentInclude/issues"
   },
   "dependencies": {
     "commander": "2.0.0",
