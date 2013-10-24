@@ -9,6 +9,9 @@
   "author": "Paul Vollmer",
   "license": "MIT",
   "main": "lib/index.js",
+  "bin": {
+    "rci": "bin/rci"
+  },
   "scripts": {
     "test": "make test"
   },
