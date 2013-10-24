@@ -115,18 +115,9 @@ describe('lib/index.js', function() {
       assert.deepEqual(expected, result);
     });
 
-    it('content: "<%>script: ls</%>"', function() {
-      var expected = 'LICENSE\n'+
-                     'Makefile\n'+
-                     'README.md\n'+
-                     'bin\n'+
-                     'docs\n'+
-                     'lib\n'+
-                     'node_modules\n'+
-                     'package.json\n'+
-                     'samples\n'+
-                     'test';
-      var result = rci.process('<%>script: ls</%>', '<%>', '</%>');
+    it('content: "<%>script: cat test/files/no-include.txt</%>"', function() {
+      var expected = 'no include at this file.';
+      var result = rci.process('<%>script: cat test/files/no-include.txt</%>', '<%>', '</%>');
       assert.deepEqual(expected, result);
     });
 
