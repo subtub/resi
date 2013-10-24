@@ -45,7 +45,7 @@ describe('lib/index.js', function() {
 
     it('lex "<%>http://link.to.url</%>".', function() {
       var result = rci.lexer('<%>http://link.to.url</%>','<%>', '</%>');
-      var expected = [ {type:'url', content:'http://link.to.url'} ];
+      var expected = [ {type:'weburl', content:'http://link.to.url'} ];
       assert.deepEqual(expected, result);
     });
 
@@ -65,14 +65,14 @@ describe('lib/index.js', function() {
     it('lex "hello world <%>http://link.to.url</%>".', function() {
       var result = rci.lexer('hello world <%>http://link.to.url</%>','<%>', '</%>');
       var expected = [ {type:'text', content:'hello world '},
-                       {type:'url',  content:'http://link.to.url'} ];
+                       {type:'weburl',  content:'http://link.to.url'} ];
       assert.deepEqual(expected, result);
     });
     
     it('lex "hello world <%>http://link.to.url</%> more text here...".', function() {
       var result = rci.lexer('hello world <%>http://link.to.url</%> more text here...','<%>', '</%>');
       var expected = [ {type:'text', content: 'hello world '},
-                       {type:'url',  content: 'http://link.to.url'},
+                       {type:'weburl',  content: 'http://link.to.url'},
                        {type:'text', content:' more text here...'} ];
       assert.deepEqual(expected, result);
     });
@@ -81,7 +81,7 @@ describe('lib/index.js', function() {
       var result = rci.lexer('<%>path/to/file.txt</%> <%>http://link.to.url</%>','<%>', '</%>');
       var expected = [ {type:'file', content:'path/to/file.txt'},
                        {type:'text', content: ' '},
-                       {type:'url',  content:'http://link.to.url'} ];
+                       {type:'weburl',  content:'http://link.to.url'} ];
       assert.deepEqual(expected, result);
     });
 
@@ -89,7 +89,7 @@ describe('lib/index.js', function() {
       var result = rci.lexer('<%>path/to/file.txt</%> <%>http://link.to.url</%> <%>script: whoami</%>','<%>', '</%>');
       var expected = [ {type:'file', content:'path/to/file.txt'},
                        {type:'text', content: ' '},
-                       {type:'url',  content:'http://link.to.url'},
+                       {type:'weburl',  content:'http://link.to.url'},
                        {type:'text', content: ' '},
                        {type:'script',  content:'whoami'} ];
       assert.deepEqual(expected, result);
@@ -140,15 +140,15 @@ describe('lib/index.js', function() {
     });
   });
 
-  describe('#isUrl()', function() {
+  describe('#isHttp()', function() {
     it('should return true if it is a http url.', function() {
-      assert.equal(true, rci.isUrl('http://www.subtub.io/'));
+      assert.equal(true, rci.isHttp('http://www.subtub.io/'));
     });
     it('should return true if it is a https url.', function() {
-      assert.equal(true, rci.isUrl('https://www.subtub.io/'));
+      assert.equal(true, rci.isHttp('https://www.subtub.io/'));
     });
     it('should return false if it is not a url.', function() {
-      assert.equal(false, rci.isUrl('foo/bar'));
+      assert.equal(false, rci.isHttp('foo/bar'));
     });
   });
 

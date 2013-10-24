@@ -49,7 +49,7 @@ var endTag = '</%>';
 
 if (program.input) {
   // Check if the input is an url.
-  if (rci.isUrl(program.input)) {
+  if (rci.isHttp(program.input)) {
     var request = require('request');
     request(program.input, function (error, response, body) {
       if (!error && response.statusCode == 200) {
