@@ -7,7 +7,7 @@ var program = require('commander');
 var CommanderUtils = require('commander-utils');
 var pkg = require('../package.json');
 var fs = require('fs');
-var rci = require('../lib');
+var resi = require('../lib');
 
 /**
  * Initialize the commander-utils module.
@@ -20,11 +20,11 @@ program
   .setDescription('Recursive Content Include')
   .addExamples([
     { description: 'Process a local file and print the result to console.',
-      command:     'rci --input path/to/file.txt' },
+      command:     'resi --input path/to/file.txt' },
     { description: 'Request a file and process it. Print the result to console.',
-      command:     'rci --input http://url.to.file/' },
+      command:     'resi --input http://url.to.file/' },
     { description: 'Process a file with custom begin/end tags (mustache style).',
-      command:     'rci --begin-tag {{ --end-tag }} --input path/to/file.txt' }
+      command:     'resi --begin-tag {{ --end-tag }} --input path/to/file.txt' }
   ]);
 
 /**
@@ -49,18 +49,18 @@ var endTag = '</%>';
 
 if (program.input) {
   // Check if the input is an url.
-  if (rci.isHttp(program.input)) {
+  if (resi.isHttp(program.input)) {
     var request = require('request');
     request(program.input, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        var data = rci.process(body, beginTag, endTag);
+        var data = resi.process(body, beginTag, endTag);
         outputHelper(data);
       }
     });
   }
   // If it is no url, read the file
   else {
-    var data = rci.readFileSync(program.input, beginTag, endTag);
+    var data = resi.readFileSync(program.input, beginTag, endTag);
     outputHelper(data);
   }
 }

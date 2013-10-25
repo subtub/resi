@@ -1,26 +1,27 @@
 {
-  "name": "RecursiveContentInclude",
-  "version": "0.3.1",
-  "description": "Recursive Content Include and a cli tool that do it",
+  "name": "resi",
+  "version": "0.4.0",
+  "description": "Recursive Source Include",
   "keywords": [
     "content",
+    "source",
     "include"
   ],
   "author": "Paul Vollmer",
   "license": "MIT",
   "main": "lib/index.js",
   "bin": {
-    "rci": "bin/rci"
+    "resi": "bin/resi"
   },
   "scripts": {
     "test": "make test"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/subtub/RecursiveContentInclude.git"
+    "url": "git://github.com/subtub/resi.git"
   },
   "bugs": {
-    "url": "https://github.com/subtub/RecursiveContentInclude/issues"
+    "url": "https://github.com/subtub/resi/issues"
   },
   "dependencies": {
     "commander": "2.0.0",

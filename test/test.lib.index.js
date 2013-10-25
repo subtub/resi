@@ -109,9 +109,9 @@ describe('lib/index.js', function() {
       assert.deepEqual(expected, result);
     });
 
-    it('content: "<%>https://raw.github.com/subtub/RecursiveContentInclude/master/test/files/no-include.txt</%>"', function() {
+    it('content: "<%>https://raw.github.com/subtub/resi/master/test/files/no-include.txt</%>"', function() {
       var expected = 'no include at this file.';
-      var result = rci.process('<%>https://raw.github.com/subtub/RecursiveContentInclude/master/test/files/no-include.txt</%></%>', '<%>', '</%>');
+      var result = rci.process('<%>https://raw.github.com/subtub/resi/master/test/files/no-include.txt</%></%>', '<%>', '</%>');
       assert.deepEqual(expected, result);
     });
 
@@ -127,9 +127,9 @@ describe('lib/index.js', function() {
       assert.deepEqual(expected, result);
     });
 
-    it('content: "hello world, <%>https://raw.github.com/subtub/RecursiveContentInclude/master/test/files/no-include.txt</%></%>"', function() {
+    it('content: "hello world, <%>https://raw.github.com/subtub/resi/master/test/files/no-include.txt</%></%>"', function() {
       var expected = 'hello world, no include at this file.';
-      var result = rci.process('hello world, <%>https://raw.github.com/subtub/RecursiveContentInclude/master/test/files/no-include.txt</%></%>', '<%>', '</%>');
+      var result = rci.process('hello world, <%>https://raw.github.com/subtub/resi/master/test/files/no-include.txt</%></%>', '<%>', '</%>');
       assert.deepEqual(expected, result);
     });
 
