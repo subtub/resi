@@ -18,10 +18,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/subtub/RecursiveContentInclude.git"
+    "url": "git://github.com/subtub/resi.git"
   },
   "bugs": {
-    "url": "https://github.com/subtub/RecursiveContentInclude/issues"
+    "url": "https://github.com/subtub/resi/issues"
   },
   "dependencies": {
     "commander": "2.0.0",

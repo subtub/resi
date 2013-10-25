@@ -4,7 +4,7 @@ module.exports = { version: '0.0.2',
   // Set GitHub User- and Project-Name.
   github: {
     username: 'subtub',
-    project: 'RecursiveContentInclude'
+    project: 'resi'
   },
 
   // Settings for the README.md file.

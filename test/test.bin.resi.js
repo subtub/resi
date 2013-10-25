@@ -6,8 +6,8 @@ describe('bin/resi', function() {
   testExec('');
   testExec('-i test/files/no-include.txt');
   testExec('-i test/files/include-file.txt -o test/files/_test_1.txt');
-  testExec('-i https://raw.github.com/subtub/RecursiveContentInclude/master/test/files/include-file.txt');
-  testExec('-i https://raw.github.com/subtub/RecursiveContentInclude/master/test/files/include-file.txt -o test/files/_test_2.txt');
+  testExec('-i https://raw.github.com/subtub/resi/master/test/files/include-file.txt');
+  testExec('-i https://raw.github.com/subtub/resi/master/test/files/include-file.txt -o test/files/_test_2.txt');
 });
 
 /**
