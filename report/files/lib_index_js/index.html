@@ -45,11 +45,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">53.04</p>
+      <p class="stat">53.09</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">142</p>
+      <p class="stat">171</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">45.08</p>
+      <p class="stat">49.75</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">0.93</p>
+      <p class="stat">1.13</p>
     </div>
   </div>
 </div>
@@ -98,7 +98,7 @@ var execSync = require(&#039;exec-sync&#039;);
 //var util = require(&#039;util&#039;);
 
 
-var RecursiveContentInclude = {
+var resi = {
 
   /**
    * Read a file and run the include process.
@@ -151,8 +151,13 @@ var RecursiveContentInclude = {
         // if there is a tag...
         else {
           // check if it is an url, set the type to &quot;url&quot;.
-          if (this.isUrl(contentArray[0])) {
-            obj.push( {type: &#039;url&#039;, content: contentArray[0]} );
+          if (this.isHttp(contentArray[0])) {
+            obj.push( {type: &#039;weburl&#039;, content: contentArray[0]} );
+          }
+          // check if it is a script, set the type to &quot;script&quot;.
+          else if (this.isScript(contentArray[0])) {
+            var scriptContent = contentArray[0].split(&#039;script: &#039;);
+            obj.push( {type: &#039;script&#039;, content: scriptContent[1]} );
           }
           // set the type to &quot;file&quot;.
           else {
@@ -190,9 +195,12 @@ var RecursiveContentInclude = {
       else if (lexed[0].type === &#039;file&#039;) {
         tmp = this.readFileSync(lexed[0].content, {beginTag: beginTag, endTag: endTag});
       }
-      else if (lexed[0].type === &#039;url&#039;) {
+      else if (lexed[0].type === &#039;weburl&#039;) {
         var data = execSync(&#039;curl -s &#039;+lexed[0].content);
         tmp = this.process(data, beginTag, endTag);
+      }
+      else if (lexed[0].type === &#039;script&#039;) {
+        tmp = execSync(lexed[0].content);
       }
     }
     // If there are more than one object...
@@ -204,9 +212,12 @@ var RecursiveContentInclude = {
         else if (lexed[i].type === &#039;file&#039;) {
           tmp += this.readFileSync(lexed[i].content, {beginTag: beginTag, endTag: endTag});
         }
-        else if (lexed[i].type === &#039;url&#039;) {
+        else if (lexed[i].type === &#039;weburl&#039;) {
           var curlData = execSync(&#039;curl -s &#039;+lexed[i].content);
           tmp += this.process(curlData, beginTag, endTag);
+        }
+        else if (lexed[i].type === &#039;script&#039;) {
+          tmp += execSync(lexed[i].content);
         }
       }
     }
@@ -220,11 +231,29 @@ var RecursiveContentInclude = {
    * @param {String} str The tag content.
    * @returns {Boolean} true or false.
    */
-  isUrl: function(str) {
-    //console.log(&#039;isUrl: &#039;+str);
+  isHttp: function(str) {
+    //console.log(&#039;isHttp: &#039;+str);
     var isHttp = str.indexOf(&#039;http://&#039;);
     var isHttps = str.indexOf(&#039;https://&#039;);
     if (isHttp === 0 || isHttps === 0) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  },
+
+  /**
+   * Check if the tag is a script.
+   * The script tag begin with &quot;script: &quot;.
+   *
+   * @param {String} str The script content.
+   * @returns {Boolean} true or false.
+   */
+  isScript: function(str) {
+    //console.log(&#039;isScript: &#039;+str);
+    var script = str.indexOf(&#039;script: &#039;);
+    if (script === 0) {
       return true;
     }
     else {
@@ -234,7 +263,7 @@ var RecursiveContentInclude = {
 
 };
 
-module.exports = RecursiveContentInclude;</textarea>
+module.exports = resi;</textarea>
   </div>
 </div>
 
