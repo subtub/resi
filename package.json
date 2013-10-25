@@ -1,16 +1,17 @@
 {
-  "name": "RecursiveContentInclude",
+  "name": "resi",
   "version": "0.3.1",
-  "description": "Recursive Content Include and a cli tool that do it",
+  "description": "Recursive Source Include",
   "keywords": [
     "content",
+    "source",
     "include"
   ],
   "author": "Paul Vollmer",
   "license": "MIT",
   "main": "lib/index.js",
   "bin": {
-    "rci": "bin/rci"
+    "resi": "bin/resi"
   },
   "scripts": {
     "test": "make test"
