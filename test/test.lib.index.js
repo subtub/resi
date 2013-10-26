@@ -96,46 +96,46 @@ describe('lib/index.js', function() {
     });
   });
 
-  describe('#process()', function() {
+  describe('#compile()', function() {
     it('content: "hello world"', function() {
       var expected = 'hello world';
-      var result = rci.process('hello world', '<%>', '</%>');
+      var result = rci.compile('hello world', '<%>', '</%>');
       assert.deepEqual(expected, result);
     });
 
     it('content: "<%>test/files/no-include.txt</%>"', function() {
       var expected = 'no include at this file.';
-      var result = rci.process('<%>test/files/no-include.txt</%>', '<%>', '</%>');
+      var result = rci.compile('<%>test/files/no-include.txt</%>', '<%>', '</%>');
       assert.deepEqual(expected, result);
     });
 
     it('content: "<%>https://raw.github.com/subtub/resi/master/test/files/no-include.txt</%>"', function() {
       var expected = 'no include at this file.';
-      var result = rci.process('<%>https://raw.github.com/subtub/resi/master/test/files/no-include.txt</%></%>', '<%>', '</%>');
+      var result = rci.compile('<%>https://raw.github.com/subtub/resi/master/test/files/no-include.txt</%></%>', '<%>', '</%>');
       assert.deepEqual(expected, result);
     });
 
     it('content: "<%>script: cat test/files/no-include.txt</%>"', function() {
       var expected = 'no include at this file.';
-      var result = rci.process('<%>script: cat test/files/no-include.txt</%>', '<%>', '</%>');
+      var result = rci.compile('<%>script: cat test/files/no-include.txt</%>', '<%>', '</%>');
       assert.deepEqual(expected, result);
     });
 
     it('content: "hello world, <%>test/files/no-include.txt</%>"', function() {
       var expected = 'hello world, no include at this file.';
-      var result = rci.process('hello world, <%>test/files/no-include.txt</%>', '<%>', '</%>');
+      var result = rci.compile('hello world, <%>test/files/no-include.txt</%>', '<%>', '</%>');
       assert.deepEqual(expected, result);
     });
 
     it('content: "hello world, <%>https://raw.github.com/subtub/resi/master/test/files/no-include.txt</%></%>"', function() {
       var expected = 'hello world, no include at this file.';
-      var result = rci.process('hello world, <%>https://raw.github.com/subtub/resi/master/test/files/no-include.txt</%></%>', '<%>', '</%>');
+      var result = rci.compile('hello world, <%>https://raw.github.com/subtub/resi/master/test/files/no-include.txt</%></%>', '<%>', '</%>');
       assert.deepEqual(expected, result);
     });
 
     it('content: "hello world, <%>test/files/no-include.txt</%> more text..."', function() {
       var expected = 'hello world, no include at this file. more text...';
-      var result = rci.process('hello world, <%>test/files/no-include.txt</%> more text...', '<%>', '</%>');
+      var result = rci.compile('hello world, <%>test/files/no-include.txt</%> more text...', '<%>', '</%>');
       assert.deepEqual(expected, result);
     });
   });
