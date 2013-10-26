@@ -38,7 +38,7 @@
     "exec-sync": "0.1.6"
   },
   "devDependencies": {
-    "CommonMakefiles": "https://github.com/subtub/CommonMakefiles/archive/v0.1.1.tar.gz",
+    "CommonMakefiles": "https://github.com/subtub/CommonMakefiles/archive/v0.1.0.tar.gz",
     "subtool": "https://github.com/subtub/subtool/archive/v0.0.5.tar.gz",
     "mocha": "1.13.0",
     "jshint" : "2.3.0",
