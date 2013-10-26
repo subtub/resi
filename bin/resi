@@ -33,6 +33,7 @@ program
 program
   .option('-i, --input <File>', 'the input, local file or web url')
   .option('-o, --output <File>', 'the file output')
+  .option('-e, --eval <String>', 'pass a string from the command line as input')
   .option('-b, --begin-tag <String>', 'set the begin tag')
   .option('-e, --end-tag <String>', 'set the end tag');
 
@@ -63,6 +64,9 @@ if (program.input) {
     var data = resi.readFileSync(program.input, beginTag, endTag);
     outputHelper(data);
   }
+}
+else if (program.eval) {
+  program.log.info(resi.process(program.eval, beginTag, endTag));
 }
 
 if (program.beginTag) {
