@@ -3,10 +3,8 @@
 ###
 
 
-COMMON_MAKEFILES_PATH=node_modules/CommonMakefiles
-include $(COMMON_MAKEFILES_PATH)/index.make
-include $(COMMON_MAKEFILES_PATH)/node/all.make
-include $(COMMON_MAKEFILES_PATH)/subtub/subtool.make
+include node_modules/CommonMakefiles/node.make
+include node_modules/CommonMakefiles/subtool.make
 
 test: jshint mocha
 
