@@ -56,14 +56,14 @@ var closeTag = '</%>';
  */
 if (program.input) {
   // Check if the input is an url.
-  if (resi.isHttp(program.input)) {
+  if (resi.lexer.isHttp(program.input)) {
     var request = require('request');
     request(program.input, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         // Print only the lexer tokens
         if (program.tokens) {
           console.log('TODO, show tokens');
-          resi.lexer(body, openTag, closeTag);
+          resi.lexer.tokenize(body, openTag, closeTag);
         }
         // compile it
         else {
@@ -81,7 +81,7 @@ if (program.input) {
   else {
     // Print only the lexer tokens
     if (program.tokens) {
-      var tokens = resi.lexer(fs.readFileSync(program.input, 'utf8'), openTag, closeTag);
+      var tokens = resi.lexer.tokenize(fs.readFileSync(program.input, 'utf8'), openTag, closeTag);
       program.log.info(util.inspect(tokens, false, null));
     }
     // compile it
