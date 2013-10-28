@@ -42,6 +42,13 @@ describe('lib/lexer.js', function() {
                        {type:'weburl',  content:'http://link.to.url'} ];
       assert.deepEqual(expected, result);
     });
+
+    it('tokenize "hello world <%>script: whoami</%>".', function() {
+      var result = lexer.tokenize('hello world <%>script: whoami</%>', '<%>', '</%>');
+      var expected = [ {type:'text', content:'hello world '},
+                       {type:'script',  content:'whoami'} ];
+      assert.deepEqual(expected, result);
+    });
     
     it('tokenize "hello world <%>http://link.to.url</%> more text here...".', function() {
       var result = lexer.tokenize('hello world <%>http://link.to.url</%> more text here...', '<%>', '</%>');
@@ -86,19 +93,22 @@ describe('lib/lexer.js', function() {
     it('should return true if it is a http url.', function() {
       assert.equal(true, lexer.isHttp('http://www.subtub.io/'));
     });
+
     it('should return true if it is a https url.', function() {
       assert.equal(true, lexer.isHttp('https://www.subtub.io/'));
     });
-    it('should return false if it is not a url.', function() {
+    
+    it('should return false if it is not a http(s) url.', function() {
       assert.equal(false, lexer.isHttp('foo/bar'));
     });
   });
 
   describe('#isScript()', function() {
-    it('should return true if the parameter begin with "sh ".', function() {
+    it('should return true if the parameter begin with "script: ".', function() {
       var result = lexer.isScript('script: whoami');
       assert.equal(true, result);
     });
+    
     it('should return false if it is no script.', function() {
       var result = lexer.isScript('path/to/file.txt');
       assert.equal(false, result);
