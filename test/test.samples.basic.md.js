@@ -4,7 +4,7 @@ var rci = require('../lib');
 
 describe('samples/basic.md', function() {
   it('test with "samples/basic.md"', function() {
-    var data = rci.readFileSync('./samples/basic.md');
+    var data = rci.readFileSync('./samples/basic.md', '<%>', '</%>');
     var expected = '# Usage:\n'+
                    '\n'+
                    'Run `rci -i sample/basic.md` to print the result to console.\n'+

@@ -8,11 +8,13 @@ var CommanderUtils = require('commander-utils');
 var pkg = require('../package.json');
 var fs = require('fs');
 var resi = require('../lib');
+var util = require('util');
 
 /**
  * Initialize the commander-utils module.
  */
 CommanderUtils(program, pkg);
+
 /**
  * Set some commander-utils specific settings.
  */
@@ -33,9 +35,10 @@ program
 program
   .option('-i, --input <File>', 'the input, local file or web url')
   .option('-o, --output <File>', 'the file output')
+  .option('--open-tag <String>', 'set the begin tag')
+  .option('--close-tag <String>', 'set the end tag')
   .option('-e, --eval <String>', 'pass a string from the command line as input')
-  .option('-b, --begin-tag <String>', 'set the begin tag')
-  .option('-e, --end-tag <String>', 'set the end tag');
+  .option('-t, --tokens', 'print out the tokens that the lexer produce');
 
 /**
  * Parse it.
@@ -43,40 +46,65 @@ program
 program.parseUtils(process.argv);
 
 /**
- * The tool logic.
+ * Variables
  */
-var beginTag = '<%>';
-var endTag = '</%>';
+var openTag = '<%>';
+var closeTag = '</%>';
 
+/**
+ * The input
+ */
 if (program.input) {
   // Check if the input is an url.
   if (resi.isHttp(program.input)) {
     var request = require('request');
     request(program.input, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        var data = resi.compile(body, beginTag, endTag);
-        outputHelper(data);
+        // Print only the lexer tokens
+        if (program.tokens) {
+          console.log('TODO, show tokens');
+          resi.lexer(body, openTag, closeTag);
+        }
+        // compile it
+        else {
+          var data = resi.compile(body, openTag, closeTag);
+          outputHelper(data);
+        }
+      }
+      else {
+        program.log.warn('Request failed.');
+        program.log.warn('Check if the web url is correct.');
       }
     });
   }
   // If it is no url, read the file
   else {
-    var data = resi.readFileSync(program.input, beginTag, endTag);
-    outputHelper(data);
+    // Print only the lexer tokens
+    if (program.tokens) {
+      var tokens = resi.lexer(fs.readFileSync(program.input, 'utf8'), openTag, closeTag);
+      program.log.info(util.inspect(tokens, false, null));
+    }
+    // compile it
+    else {
+      var data = resi.readFileSync(program.input, openTag, closeTag);
+      outputHelper(data);
+    }
   }
 }
 else if (program.eval) {
-  program.log.info(resi.compile(program.eval, beginTag, endTag));
+  program.log.info(resi.compile(program.eval, openTag, closeTag));
 }
 
-if (program.beginTag) {
-  beginTag = program.beginTag;
-  program.log.info('Set the begin Tag to: ' + beginTag);
+/**
+ * Optional options
+ */
+if (program.openTag) {
+  openTag = program.openTag;
+  program.log.info('Set the begin Tag to: ' + openTag);
 }
-
-if (program.endTag) {
-  endTag = program.endTag;
-  program.log.info('Set the end Tag to: ' + endTag);
+if (program.closeTag) {
+  closeTag = program.closeTag;
+  program.log.info('Set the end Tag to: ' + closeTag);
 }
 
 /**

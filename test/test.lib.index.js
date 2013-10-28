@@ -6,25 +6,25 @@ describe('lib/index.js', function() {
 
   describe('#readFileSync()', function() {
     it('test with "no-include.txt"', function() {
-      var data = rci.readFileSync('./test/files/no-include.txt');
+      var data = rci.readFileSync('./test/files/no-include.txt', '<%>', '</%>');
       var expected = 'no include at this file.';
       assert.equal(expected, data);
     });
 
     it('test with "include-file.txt"', function() {
-      var data = rci.readFileSync('./test/files/include-file.txt');
+      var data = rci.readFileSync('./test/files/include-file.txt', '<%>', '</%>');
       var expected = 'hello world\n\nno include at this file.\n';
       assert.equal(expected, data);
     });
 
     it('test with "include-files.txt"', function() {
-      var data = rci.readFileSync('./test/files/include-files.txt');
+      var data = rci.readFileSync('./test/files/include-files.txt', '<%>', '</%>');
       var expected = 'hello world\n\nno include at this file.\nno include at this file.\n';
       assert.equal(expected, data);
     });
 
     it('test with "include-url.txt"', function() {
-      var data = rci.readFileSync('./test/files/include-url.txt');
+      var data = rci.readFileSync('./test/files/include-url.txt', '<%>', '</%>');
       var expected = 'hello world\n\nno include at this file.\n';
       assert.equal(expected, data);
     });
