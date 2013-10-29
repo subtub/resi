@@ -28,6 +28,12 @@ describe('lib/index.js', function() {
       var expected = 'hello world\n\nno include at this file.\n';
       assert.equal(expected, data);
     });
+
+    it('test with "include-script.txt"', function() {
+      var data = rci.readFileSync('./test/files/include-script.txt', '<%>', '</%>');
+      var expected = 'hello world\n\nhello resi\n';
+      assert.equal(expected, data);
+    });
   });
 
   describe('#compile()', function() {
