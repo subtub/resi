@@ -52,15 +52,40 @@ var openTag = '<%>';
 var closeTag = '</%>';
 
 /**
+ * Some helper functions we need at the cli.
+ */
+var helper = {
+  /**
+   * save the file if the --output option was set.
+   */
+  output: function(data) {
+    if (program.output) {
+      program.log.info('Write file to ' + program.output);
+      fs.writeFile(program.output, data, 'utf8', function() {
+        program.log.info('File writer ready!');
+      });
+    }
+    else {
+      program.log.info(data);
+    }
+  },
+
+  outputTokens: function(content) {
+    var tokens = resi.lexer.tokenize(content, openTag, closeTag);
+    program.log.info(util.inspect(tokens, false, null));
+  }
+};
+
+/**
  * Optional options
  */
 if (program.openTag) {
   openTag = program.openTag;
-  program.log.info('Set the begin Tag to: ' + openTag);
+  program.log.info('Set the open Tag to: ' + openTag);
 }
 if (program.closeTag) {
   closeTag = program.closeTag;
-  program.log.info('Set the end Tag to: ' + closeTag);
+  program.log.info('Set the close Tag to: ' + closeTag);
 }
 
 /**
@@ -74,18 +99,18 @@ if (program.input) {
       if (!error && response.statusCode == 200) {
         // Print only the lexer tokens
         if (program.tokens) {
-          console.log('TODO, show tokens');
-          resi.lexer.tokenize(body, openTag, closeTag);
+          helper.outputTokens(body);
         }
         // compile it
         else {
           var data = resi.compile(body, openTag, closeTag);
-          outputHelper(data);
+          helper.output(data);
         }
       }
       else {
         program.log.warn('Request failed.');
         program.log.warn('Check if the web url is correct.');
+        program.log.warn(error);
       }
     });
 
@@ -102,7 +127,7 @@ if (program.input) {
       // compile it
       else {
         var data = resi.compile(res.body, openTag, closeTag);
-        outputHelper(data);
+        helper.output(data);
       }
 
     }).on('error', function(e) {
@@ -113,38 +138,29 @@ if (program.input) {
     */
 
   }
-  // If it is no url, read the file
+  // If it is no weburl, read the file
   else {
     // Print only the lexer tokens
     if (program.tokens) {
-      var tokens = resi.lexer.tokenize(fs.readFileSync(program.input, 'utf8'), openTag, closeTag);
-      program.log.info(util.inspect(tokens, false, null));
+      helper.outputTokens(fs.readFileSync(program.input, 'utf8'));
     }
     // compile it
     else {
       var data = resi.readFileSync(program.input, openTag, closeTag);
-      outputHelper(data);
+      helper.output(data);
     }
   }
 }
+// If we run the --eval mode
 else if (program.eval) {
-  program.log.info(resi.compile(program.eval, openTag, closeTag));
+  if (program.tokens) {
+    helper.outputTokens(program.eval);
+  } else {
+    program.log.info(resi.compile(program.eval, openTag, closeTag));
+  }
 }
+// If no input was set, log a warning message.
 else {
   program.log.warn('resi-warn: missing input');
+  program.log.warn('Please check the examples at the --help usage information.');
 }
-
-/**
- * save the file if the --output option was set.
- */
-function outputHelper(data) {
-  if (program.output) {
-    program.log.info('Write file to ' + program.output);
-    fs.writeFile(program.output, data, 'utf8', function() {
-      program.log.info('File writer ready!');
-    });
-  }
-  else {
-    program.log.info(data);
-  }
-};
