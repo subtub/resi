@@ -90,49 +90,16 @@ describe('lib/lexer.js', function() {
   // });
 
   describe('#isHttp()', function() {
-    describe('should return true if input string is a http url.', function() {
-      it('without whitespace.', function() {
-        assert.equal(true, lexer.isHttp('http://www.subtub.io/'));
-      });
-      it('whitespace at the beginning.', function() {
-        assert.equal(true, lexer.isHttp('     http://www.subtub.io/'));
-      });
-      it('whitespace at the end.', function() {
-        assert.equal(true, lexer.isHttp('http://www.subtub.io/    '));
-      });
-      it('whitespace at the beginning and end.', function() {
-        assert.equal(true, lexer.isHttp('         http://www.subtub.io/       '));
-      });
+    it('should return true if input string is a http url.', function() {
+      assert.equal(true, lexer.isHttp('http://www.subtub.io/'));
     });
 
-    describe('should return true if input string is a https url.', function() {
-      it('without whitespace.', function() {
-        assert.equal(true, lexer.isHttp('https://www.subtub.io/'));
-      });
-      it('whitespace at the beginning.', function() {
-        assert.equal(true, lexer.isHttp('  https://www.subtub.io/'));
-      });
-      it('whitespace at the end.', function() {
-        assert.equal(true, lexer.isHttp('https://www.subtub.io/           '));
-      });
-      it('whitespace at the beginning and end.', function() {
-        assert.equal(true, lexer.isHttp('          https://www.subtub.io/  '));
-      });
+    it('should return true if input string is a https url.', function() {
+      assert.equal(true, lexer.isHttp('https://www.subtub.io/'));
     });
     
-    describe('should return false if input string is not a http(s) url.', function() {
-      it('without whitespace.', function() {
-        assert.equal(false, lexer.isHttp('foo/bar'));
-      });
-      it('whitespace at the beginning.', function() {
-        assert.equal(false, lexer.isHttp('                foo/bar'));
-      });
-      it('whitespace at the end.', function() {
-        assert.equal(false, lexer.isHttp('foo/bar            '));
-      });
-      it('whitespace at the beginning and end.', function() {
-        assert.equal(false, lexer.isHttp(' foo/bar                        '));
-      });
+    it('should return false if input string is not a http(s) url.', function() {
+      assert.equal(false, lexer.isHttp('foo/bar'));
     });
   });
 

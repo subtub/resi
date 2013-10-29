@@ -12,4 +12,11 @@ describe('lib/utils.js', function() {
     });
   });
 
+  describe('#killLinebreaks()', function() {
+    it('should return the string without line breaks.', function() {
+      assert.equal('foo', utils.killLinebreaks('\nfoo\n\n'));
+      assert.equal('foobar', utils.killLinebreaks('\nfoo\nbar\n'));
+    });
+  });
+
 });
