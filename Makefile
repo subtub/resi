@@ -3,8 +3,8 @@
 ###
 
 
-include node_modules/CommonMakefiles/node.make
-include node_modules/CommonMakefiles/subtool.make
+include node_modules/common-makefiles/node.make
+include node_modules/common-makefiles/subtool.make
 
 test: jshint mocha
 
