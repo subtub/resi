@@ -90,16 +90,49 @@ describe('lib/lexer.js', function() {
   // });
 
   describe('#isHttp()', function() {
-    it('should return true if it is a http url.', function() {
-      assert.equal(true, lexer.isHttp('http://www.subtub.io/'));
+    describe('should return true if input string is a http url.', function() {
+      it('without whitespace.', function() {
+        assert.equal(true, lexer.isHttp('http://www.subtub.io/'));
+      });
+      it('whitespace at the beginning.', function() {
+        assert.equal(true, lexer.isHttp('     http://www.subtub.io/'));
+      });
+      it('whitespace at the end.', function() {
+        assert.equal(true, lexer.isHttp('http://www.subtub.io/    '));
+      });
+      it('whitespace at the beginning and end.', function() {
+        assert.equal(true, lexer.isHttp('         http://www.subtub.io/       '));
+      });
     });
 
-    it('should return true if it is a https url.', function() {
-      assert.equal(true, lexer.isHttp('https://www.subtub.io/'));
+    describe('should return true if input string is a https url.', function() {
+      it('without whitespace.', function() {
+        assert.equal(true, lexer.isHttp('https://www.subtub.io/'));
+      });
+      it('whitespace at the beginning.', function() {
+        assert.equal(true, lexer.isHttp('  https://www.subtub.io/'));
+      });
+      it('whitespace at the end.', function() {
+        assert.equal(true, lexer.isHttp('https://www.subtub.io/           '));
+      });
+      it('whitespace at the beginning and end.', function() {
+        assert.equal(true, lexer.isHttp('          https://www.subtub.io/  '));
+      });
     });
     
-    it('should return false if it is not a http(s) url.', function() {
-      assert.equal(false, lexer.isHttp('foo/bar'));
+    describe('should return false if input string is not a http(s) url.', function() {
+      it('without whitespace.', function() {
+        assert.equal(false, lexer.isHttp('foo/bar'));
+      });
+      it('whitespace at the beginning.', function() {
+        assert.equal(false, lexer.isHttp('                foo/bar'));
+      });
+      it('whitespace at the end.', function() {
+        assert.equal(false, lexer.isHttp('foo/bar            '));
+      });
+      it('whitespace at the beginning and end.', function() {
+        assert.equal(false, lexer.isHttp(' foo/bar                        '));
+      });
     });
   });
 
@@ -109,10 +142,25 @@ describe('lib/lexer.js', function() {
       assert.equal(true, result);
     });
     
-    it('should return false if it is no script.', function() {
+    it('should return false if input string is not a script.', function() {
       var result = lexer.isScript('path/to/file.txt');
       assert.equal(false, result);
     });
   });
+
+  // describe('#Tokens()', function() {
+  //   it('should return false if it is no script.', function() {
+  //     var tokens = new Tokens();
+  //     tokens.addText('hello world');
+  //     tokens.addFile('path/to/file');
+  //     tokens.addWeburl('http://subtool.io');
+  //     tokens.addScript('whoami');
+  //     var expected = [ {type:'text', content:'hello world'},
+  //                      {type:'file', content:'path/to/file'},
+  //                      {type:'weburl', content:'http://subtub.io'},
+  //                      {type:'script', content:'whoami'} ];
+  //     assert.deepEqual(expected, result);
+  //   });
+  // });
 
 });
