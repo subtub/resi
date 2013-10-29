@@ -35,6 +35,17 @@ describe('lib/index.js', function() {
       assert.equal(expected, data);
     });
   });
+  
+  describe('#assembly()', function() {
+    it('content: "hello world"', function() {
+      var tokens = [
+        {type:'text', content:'hello world'}
+      ];
+      var result = rci.assembly(tokens, '<%>', '</%>');
+      var expected = 'hello world';
+      assert.deepEqual(result, expected);
+    });
+  });
 
   describe('#compile()', function() {
     it('content: "hello world"', function() {
