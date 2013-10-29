@@ -52,6 +52,18 @@ var openTag = '<%>';
 var closeTag = '</%>';
 
 /**
+ * Optional options
+ */
+if (program.openTag) {
+  openTag = program.openTag;
+  program.log.info('Set the begin Tag to: ' + openTag);
+}
+if (program.closeTag) {
+  closeTag = program.closeTag;
+  program.log.info('Set the end Tag to: ' + closeTag);
+}
+
+/**
  * The input
  */
 if (program.input) {
@@ -76,6 +88,30 @@ if (program.input) {
         program.log.warn('Check if the web url is correct.');
       }
     });
+
+    // TODO: remove request module.
+    /*
+    var http = require('https');
+    http.get(program.input, function(res) {
+      console.log("Got response: " + res.statusCode);
+      // Print only the lexer tokens
+      if (program.tokens) {
+        console.log('TODO, show tokens');
+        resi.lexer.tokenize(res.body, openTag, closeTag);
+      }
+      // compile it
+      else {
+        var data = resi.compile(res.body, openTag, closeTag);
+        outputHelper(data);
+      }
+
+    }).on('error', function(e) {
+      program.log.warn('Request failed.');
+      program.log.warn('Check if the web url is correct.');
+      program.log.warn("Got error: " + e.message);
+    });
+    */
+
   }
   // If it is no url, read the file
   else {
@@ -94,17 +130,8 @@ if (program.input) {
 else if (program.eval) {
   program.log.info(resi.compile(program.eval, openTag, closeTag));
 }
-
-/**
- * Optional options
- */
-if (program.openTag) {
-  openTag = program.openTag;
-  program.log.info('Set the begin Tag to: ' + openTag);
-}
-if (program.closeTag) {
-  closeTag = program.closeTag;
-  program.log.info('Set the end Tag to: ' + closeTag);
+else {
+  program.log.warn('resi-warn: missing input');
 }
 
 /**
