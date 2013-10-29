@@ -33,12 +33,12 @@
   },
   "dependencies": {
     "commander": "2.0.0",
-    "commander-utils": "https://github.com/subtub/commander-utils/archive/v0.1.5b.tar.gz",
+    "commander-utils": "https://github.com/subtub/commander-utils/archive/v0.1.6.tar.gz",
     "request": "2.27.0",
     "exec-sync": "0.1.6"
   },
   "devDependencies": {
-    "CommonMakefiles": "https://github.com/subtub/CommonMakefiles/archive/v0.1.1.tar.gz",
+    "CommonMakefiles": "https://github.com/subtub/CommonMakefiles/archive/v0.1.2.tar.gz",
     "subtool": "https://github.com/subtub/subtool/archive/v0.0.5.tar.gz",
     "mocha": "1.13.0",
     "jshint" : "2.3.0",
