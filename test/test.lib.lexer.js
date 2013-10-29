@@ -6,74 +6,74 @@ describe('lib/lexer.js', function() {
   
   describe('#tokenize()', function() {
     it('tokenize "hello world".', function() {
-      var result = lexer.tokenize('hello world', '<%>', '</%>');
+      var actual = lexer.tokenize('hello world', '<%>', '</%>');
       var expected = [ {type:'text', content:'hello world'} ];
-      assert.deepEqual(expected, result);
+      assert.deepEqual(actual, expected);
     });
     
     it('tokenize "<%>path/to/file.txt</%>".', function() {
-      var result = lexer.tokenize('<%>path/to/file.txt</%>', '<%>', '</%>');
+      var actual = lexer.tokenize('<%>path/to/file.txt</%>', '<%>', '</%>');
       var expected = [ {type:'file', content:'path/to/file.txt'} ];
-      assert.deepEqual(expected, result);
+      assert.deepEqual(actual, expected);
     });
 
     it('tokenize "<%>http://link.to.url</%>".', function() {
-      var result = lexer.tokenize('<%>http://link.to.url</%>', '<%>', '</%>');
+      var actual = lexer.tokenize('<%>http://link.to.url</%>', '<%>', '</%>');
       var expected = [ {type:'weburl', content:'http://link.to.url'} ];
-      assert.deepEqual(expected, result);
+      assert.deepEqual(actual, expected);
     });
 
     it('tokenize "<%>script: whoami</%>".', function() {
-      var result = lexer.tokenize('<%>script: whoami</%>', '<%>', '</%>');
+      var actual = lexer.tokenize('<%>script: whoami</%>', '<%>', '</%>');
       var expected = [ {type:'script', content:'whoami'} ];
-      assert.deepEqual(expected, result);
+      assert.deepEqual(actual, expected);
     });
 
     it('tokenize "hello world <%>path/to/file.txt</%>".', function() {
-      var result = lexer.tokenize('hello world <%>path/to/file.txt</%>', '<%>', '</%>');
+      var actual = lexer.tokenize('hello world <%>path/to/file.txt</%>', '<%>', '</%>');
       var expected = [ {type:'text', content:'hello world '},
                        {type:'file', content:'path/to/file.txt'} ];
-      assert.deepEqual(expected, result);
+      assert.deepEqual(actual, expected);
     });
 
     it('tokenize "hello world <%>http://link.to.url</%>".', function() {
-      var result = lexer.tokenize('hello world <%>http://link.to.url</%>', '<%>', '</%>');
+      var actual = lexer.tokenize('hello world <%>http://link.to.url</%>', '<%>', '</%>');
       var expected = [ {type:'text', content:'hello world '},
                        {type:'weburl',  content:'http://link.to.url'} ];
-      assert.deepEqual(expected, result);
+      assert.deepEqual(actual, expected);
     });
 
     it('tokenize "hello world <%>script: whoami</%>".', function() {
-      var result = lexer.tokenize('hello world <%>script: whoami</%>', '<%>', '</%>');
+      var actual = lexer.tokenize('hello world <%>script: whoami</%>', '<%>', '</%>');
       var expected = [ {type:'text', content:'hello world '},
                        {type:'script',  content:'whoami'} ];
-      assert.deepEqual(expected, result);
+      assert.deepEqual(actual, expected);
     });
     
     it('tokenize "hello world <%>http://link.to.url</%> more text here...".', function() {
-      var result = lexer.tokenize('hello world <%>http://link.to.url</%> more text here...', '<%>', '</%>');
+      var actual = lexer.tokenize('hello world <%>http://link.to.url</%> more text here...', '<%>', '</%>');
       var expected = [ {type:'text', content: 'hello world '},
                        {type:'weburl',  content: 'http://link.to.url'},
                        {type:'text', content:' more text here...'} ];
-      assert.deepEqual(expected, result);
+      assert.deepEqual(actual, expected);
     });
     
     it('tokenize "<%>path/to/file.txt</%> <%>http://link.to.url</%>".', function() {
-      var result = lexer.tokenize('<%>path/to/file.txt</%> <%>http://link.to.url</%>', '<%>', '</%>');
+      var actual = lexer.tokenize('<%>path/to/file.txt</%> <%>http://link.to.url</%>', '<%>', '</%>');
       var expected = [ {type:'file', content:'path/to/file.txt'},
                        {type:'text', content: ' '},
                        {type:'weburl',  content:'http://link.to.url'} ];
-      assert.deepEqual(expected, result);
+      assert.deepEqual(actual, expected);
     });
 
     it('tokenize "<%>path/to/file.txt</%> <%>http://link.to.url</%> <%>script: whoami</%>".', function() {
-      var result = lexer.tokenize('<%>path/to/file.txt</%> <%>http://link.to.url</%> <%>script: whoami</%>', '<%>', '</%>');
+      var actual = lexer.tokenize('<%>path/to/file.txt</%> <%>http://link.to.url</%> <%>script: whoami</%>', '<%>', '</%>');
       var expected = [ {type:'file', content:'path/to/file.txt'},
                        {type:'text', content: ' '},
                        {type:'weburl',  content:'http://link.to.url'},
                        {type:'text', content: ' '},
                        {type:'script',  content:'whoami'} ];
-      assert.deepEqual(expected, result);
+      assert.deepEqual(actual, expected);
     });
   });
   
@@ -83,35 +83,35 @@ describe('lib/lexer.js', function() {
   //     {type:'text', content:'hello world'}
   //     ];
 
-  //     var result = lexer.semanticParsing(tokens);
+  //     var actual = lexer.semanticParsing(tokens);
   //     var expected = 'hello world';
-  //     //assert.deepEqual(expected, result);
+  //     //assert.deepEqual(expected, actual);
   //   });
   // });
 
   describe('#isHttp()', function() {
     it('should return true if input string is a http url.', function() {
-      assert.equal(true, lexer.isHttp('http://www.subtub.io/'));
+      assert.equal(lexer.isHttp('http://www.subtub.io/'), true);
     });
 
     it('should return true if input string is a https url.', function() {
-      assert.equal(true, lexer.isHttp('https://www.subtub.io/'));
+      assert.equal(lexer.isHttp('https://www.subtub.io/'), true);
     });
     
     it('should return false if input string is not a http(s) url.', function() {
-      assert.equal(false, lexer.isHttp('foo/bar'));
+      assert.equal(lexer.isHttp('foo/bar'), false);
     });
   });
 
   describe('#isScript()', function() {
     it('should return true if the parameter begin with "script: ".', function() {
-      var result = lexer.isScript('script: whoami');
-      assert.equal(true, result);
+      var actual = lexer.isScript('script: whoami');
+      assert.equal(actual, true);
     });
     
     it('should return false if input string is not a script.', function() {
-      var result = lexer.isScript('path/to/file.txt');
-      assert.equal(false, result);
+      var actual = lexer.isScript('path/to/file.txt');
+      assert.equal(actual, false);
     });
   });
 
@@ -126,7 +126,7 @@ describe('lib/lexer.js', function() {
   //                      {type:'file', content:'path/to/file'},
   //                      {type:'weburl', content:'http://subtub.io'},
   //                      {type:'script', content:'whoami'} ];
-  //     assert.deepEqual(expected, result);
+  //     assert.deepEqual(actual, expected);
   //   });
   // });
 

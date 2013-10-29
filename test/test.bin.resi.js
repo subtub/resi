@@ -9,6 +9,7 @@ describe('bin/resi', function() {
   testExec('-i https://raw.github.com/subtub/resi/master/test/files/include-file.txt');
   testExec('-i https://raw.github.com/subtub/resi/master/test/files/include-file.txt -o test/files/_test_2.txt');
   testExec('-e "hello world"');
+  testExec('-e "hello world" -t');
 });
 
 /**
@@ -18,6 +19,6 @@ describe('bin/resi', function() {
 function testExec(cmd) {
   it('execute bin/resi '+cmd, function() {
     var tmpCode = exec('node bin/resi '+cmd, {silent:true}).code;
-    assert.equal( 0, tmpCode);
+    assert.equal(tmpCode, 0);
   });
 }

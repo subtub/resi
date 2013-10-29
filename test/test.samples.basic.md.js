@@ -1,10 +1,11 @@
 var assert = require('assert');
-var rci = require('../lib');
+var Resi = require('../lib');
+var resi = new Resi('<%>', '</%>');
 
 
 describe('samples/basic.md', function() {
   it('test with "samples/basic.md"', function() {
-    var data = rci.readFileSync('./samples/basic.md', '<%>', '</%>');
+    var actual = resi.readFileSync('./samples/basic.md');
     var expected = '# Usage:\n'+
                    '\n'+
                    'Run `rci -i sample/basic.md` to print the result to console.\n'+
@@ -36,6 +37,6 @@ describe('samples/basic.md', function() {
                    'cillum dolore eu fugiat nulla pariatur.\n'+
                    '\n'+
                    '\n';
-    assert.equal(expected, data);
+    assert.equal(actual, expected);
   });
 });

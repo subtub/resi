@@ -7,7 +7,7 @@ var program = require('commander');
 var CommanderUtils = require('commander-utils');
 var pkg = require('../package.json');
 var fs = require('fs');
-var resi = require('../lib');
+var Resi = require('../lib');
 var util = require('util');
 
 /**
@@ -87,6 +87,8 @@ if (program.closeTag) {
   closeTag = program.closeTag;
   program.log.info('Set the close Tag to: ' + closeTag);
 }
+
+resi = new Resi(openTag, closeTag);
 
 /**
  * The input
