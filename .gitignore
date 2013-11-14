@@ -16,3 +16,8 @@ docs/api.md
 ###
 test/files/_test_1.txt
 test/files/_test_2.txt
+
+###
+# Samples
+###
+samples/static_website/generated_files/
