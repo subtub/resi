@@ -1,0 +1,1 @@
+no include at this file.<%>log: log a message to the console</%>

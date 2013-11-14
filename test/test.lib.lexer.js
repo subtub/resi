@@ -29,6 +29,18 @@ describe('lib/lexer.js', function() {
       assert.deepEqual(actual, expected);
     });
 
+    it('tokenize "<%>comment: hello</%>".', function() {
+      var actual = lexer.tokenize('<%>comment: hello</%>', '<%>', '</%>');
+      var expected = [ {type:'comment', content:'hello'} ];
+      assert.deepEqual(actual, expected);
+    });
+
+    it('tokenize "<%>log: log-message</%>".', function() {
+      var actual = lexer.tokenize('<%>log: log-message</%>', '<%>', '</%>');
+      var expected = [ {type:'log', content:'log-message'} ];
+      assert.deepEqual(actual, expected);
+    });
+
     it('tokenize "hello world <%>path/to/file.txt</%>".', function() {
       var actual = lexer.tokenize('hello world <%>path/to/file.txt</%>', '<%>', '</%>');
       var expected = [ {type:'text', content:'hello world '},
@@ -123,6 +135,18 @@ describe('lib/lexer.js', function() {
     
     it('should return false if input string is not a comment.', function() {
       var actual = lexer.isComment('foo/bar');
+      assert.equal(actual, false);
+    });
+  });
+
+  describe('#isLog()', function() {
+    it('should return true if the parameter begin with "log: ".', function() {
+      var actual = lexer.isLog('log: hello world');
+      assert.equal(actual, true);
+    });
+    
+    it('should return false if input string is not a log.', function() {
+      var actual = lexer.isLog('foo/bar');
       assert.equal(actual, false);
     });
   });
