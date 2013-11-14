@@ -8,10 +8,10 @@ include node_modules/common-makefiles/subtool.make
 
 test: jshint mocha
 
-docs: jsdox
+docs: jsdox-extra
 
-readme: jsdox subtool-readme
+readme: docs subtool-readme
 
-readme-git: jsdox subtool-readme-git
+readme-git: docs subtool-readme-git
 
 .PHONY: test docs readme readme-git
