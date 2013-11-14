@@ -11,6 +11,11 @@ describe('lib/index.js', function() {
       var expected = 'no include at this file.';
       assert.equal(data, expected);
     });
+    it('test with "no-include-with-comment.txt"', function() {
+      var data = resi.readFileSync('./test/files/no-include-with-comment.txt');
+      var expected = 'no include at this file.';
+      assert.equal(data, expected);
+    });
 
     it('test with "include-file.txt"', function() {
       var data = resi.readFileSync('./test/files/include-file.txt');

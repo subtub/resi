@@ -115,6 +115,18 @@ describe('lib/lexer.js', function() {
     });
   });
 
+  describe('#isComment()', function() {
+    it('should return true if the parameter begin with "comment: ".', function() {
+      var actual = lexer.isComment('comment: hello world');
+      assert.equal(actual, true);
+    });
+    
+    it('should return false if input string is not a comment.', function() {
+      var actual = lexer.isComment('foo/bar');
+      assert.equal(actual, false);
+    });
+  });
+
   // describe('#Tokens()', function() {
   //   it('should return false if it is no script.', function() {
   //     var tokens = new Tokens();
