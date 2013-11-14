@@ -23,6 +23,8 @@ program
   .addExamples([
     { description: 'Process a local file and print the result to console.',
       command:     'resi --input path/to/file.txt' },
+    { description: 'Process a local file and save the result to output.txt',
+      command:     'resi --input path/to/file.txt --output output.txt' },
     { description: 'Request a file and process it. Print the result to console.',
       command:     'resi --input http://url.to.file/' },
     { description: 'Process a file with custom begin/end tags (mustache style).',
